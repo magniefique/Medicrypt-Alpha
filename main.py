@@ -5,7 +5,6 @@ import tabs.screen_decrypt as screen_decrypt
 import tabs.screen_progress as screen_progress
 from assets.colors import *
 
-
 # Function to switch tabs
 def switchTab(root_frame, tab_name, file=None):
     # Clear current contents of the frame
@@ -51,7 +50,6 @@ def mainFunc():
 
     # Main loop of the application
     main_win.mainloop()
-
 
 if __name__ == "__main__":
     mainFunc()

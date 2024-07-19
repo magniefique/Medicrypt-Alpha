@@ -146,7 +146,7 @@ def encryptDisplayNew(master_frame, switch_func):
 
     nav = CTkFrame(
         master=encrypt_frame,
-        width=650,
+        width=600,
         height=60,
         fg_color=MEDICRYPT_COLORS["default_bg"],
         bg_color=MEDICRYPT_COLORS["default_bg"]
@@ -174,10 +174,16 @@ def encryptDisplayNew(master_frame, switch_func):
 
     main = CTkFrame(
         master=encrypt_frame,
-        width=650,
-        height=380
+        width=600,
+        height=350,
+        fg_color=MEDICRYPT_COLORS["default_bg"],
+        bg_color=MEDICRYPT_COLORS["default_bg"]
     )
+    main.grid_propagate(False)
     main.grid(column=0, row=1, pady=2)
+
+    main.grid_columnconfigure(0, weight=1)
+    main.grid_columnconfigure(3, weight=1)
 
     file_inpt = CTkEntry(
         master=main,
@@ -226,6 +232,52 @@ def encryptDisplayNew(master_frame, switch_func):
         border_color=MEDICRYPT_COLORS["default_btn"],
     )
     password_inpt.grid(column=0, row=1, columnspan=2, padx=2, pady=5)
+
+    btn_frame = CTkFrame(
+        master=main,
+        width=720,
+        height=40,
+        bg_color=MEDICRYPT_COLORS["default_bg"],
+        fg_color=MEDICRYPT_COLORS["default_bg"],
+    )
+    btn_frame.grid(column=0, row=3, pady=5, sticky="nw")
+
+    algo1_btn = CTkButton(
+        master=btn_frame,
+        text="FY-Logistic",
+        text_color=MEDICRYPT_COLORS["default_bg"],
+        width=100,
+        height=40,
+        corner_radius=10,
+        bg_color=MEDICRYPT_COLORS["default_bg"],
+        fg_color=MEDICRYPT_COLORS["default_btn"],
+    )
+    algo1_btn.grid(column=0, row=0, padx=5, sticky='w')
+
+    algo2_btn = CTkButton(
+        master=btn_frame,
+        text="ILM-Cosine",
+        text_color=MEDICRYPT_COLORS["default_bg"],
+        width=100,
+        height=40,
+        corner_radius=10,
+        bg_color=MEDICRYPT_COLORS["default_bg"],
+        fg_color=MEDICRYPT_COLORS["default_btn"],
+    )
+    algo2_btn.grid(column=1, row=0, padx=5, sticky='w')
+
+    encrypt_btn = CTkButton(
+        master=main,
+        text_color=MEDICRYPT_COLORS["default_bg"],
+        text="Encrypt",
+        width=100,
+        height=40,
+        corner_radius=10,
+        bg_color=MEDICRYPT_COLORS["default_bg"],
+        fg_color=MEDICRYPT_COLORS["default_btn"],
+        command=lambda: switch_func(master_frame, "progress", getFilename)
+    )
+    encrypt_btn.grid(column=0, row=4, padx=4, pady=20, sticky='w')
 
     # Center the encrypt frame within the master_frame
     encrypt_frame.pack_propagate(False)  # Prevent frame from resizing to fit its children
