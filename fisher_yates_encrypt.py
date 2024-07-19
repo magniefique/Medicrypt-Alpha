@@ -107,6 +107,7 @@ class Encrypt:
     @time_encrypt
     def readVideo(self, filepath):
         cap = cv2.VideoCapture(filepath)
+        result = cv2.VideoWriter('test_encrypt.avi', cv2.VideoWriter_fourcc(*'HFYU'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(3)), int(cap.get(4))))
 
         # grabbed, frame = cap.read()
 
@@ -114,54 +115,52 @@ class Encrypt:
 
         count = 1
 
-        length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        length = cap.get(cv2.CAP_PROP_FRAME_COUNT)
         print(length)
-
-        while grabbed:
+        
+        while True:
             grabbed, frame = cap.read()
+
+            if not grabbed: 
+                print('read done')
+                break
+
             self.num_rows, self.num_cols, self.num_channels = frame.shape
 
-            if grabbed:
-                hashed = self.hashArray(frame)
-                splits = self.splitHash(hashed)
-                converted = self.convertToDecimal(splits)
-                transform = self.transformDecimal(converted)    # [Logmap1 r, Logmap1 x0, Logmap2 r, Logmap2, x0]
+            hashed = self.hashArray(frame)
+            splits = self.splitHash(hashed)
+            converted = self.convertToDecimal(splits)
+            transform = self.transformDecimal(converted)    # [Logmap1 r, Logmap1 x0, Logmap2 r, Logmap2, x0]
 
-                # print(f"{count}: {transform}")
+            # permutate
+            row_permutated = self.rowShuffle(frame, transform[1], transform[0])
+            col_permutated = self.colShuffle(row_permutated, transform[1], transform[0])    # final permutation
 
-                # permutate
-                row_permutated = self.rowShuffle(frame, transform[1], transform[0])
-                col_permutated = self.colShuffle(row_permutated, transform[1], transform[0])    # final permutation
+            flatten = col_permutated.reshape(-1, self.num_channels)
 
-                flatten = col_permutated.reshape(-1, self.num_channels)
+            # create keystream vector
+            kv = self.keystream(self.num_rows * self.num_cols, transform[3], transform[2])
+            kr, kg, kb = np.array_split(kv, 3)  # split keystream into three
+            comb_ks = np.vstack((kb, kg, kr)).T  # this is the 2d array of the keystream
 
-                # create keystream vector
-                kv = self.keystream(self.num_rows * self.num_cols, transform[3], transform[2])
-                kr, kg, kb = np.array_split(kv, 3)  # split keystream into three
-                comb_ks = np.vstack((kb, kg, kr)).T  # this is the 2d array of the keystream
+            # diffuse the pixels
+            diffuse = self.xor(flatten, comb_ks)
 
-                # diffuse the pixels
-                diffuse = self.xor(flatten, comb_ks)
+            # reshape the array into a required cv2 format
+            diffuse_pixels = diffuse.reshape(self.num_rows, self.num_cols, self.num_channels)
 
-                # reshape the array into a required cv2 format
-                diffuse_pixels = diffuse.reshape(self.num_rows, self.num_cols, self.num_channels)
+            # to be replaced by a video writers
+            # cv2.imwrite('test_vid/test_im_outs/encryptedtest_%d.png' % count, diffuse_pixels, [cv2.IMWRITE_PNG_COMPRESSION, 0])
+            result.write(diffuse_pixels)
 
-                # to be replaced by a video writers
-                cv2.imwrite('test_outs/encryptedtest_%d.png' % count, diffuse_pixels, [cv2.IMWRITE_PNG_COMPRESSION, 0])
+            count += 1
 
-                # TODO: fix missing last frame
-
-                count += 1
-
-            else:
-                print('read done')
+            
 
         cap.release()
-
-        return True
 
 
 if __name__ == '__main__':
     v = Encrypt()
 
-    v.readVideo('test_vid/test.avi')
+    v.readVideo('test_vid/test2.mp4')
