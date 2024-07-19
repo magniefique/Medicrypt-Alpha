@@ -109,6 +109,39 @@ def decryptDisplay(master_frame, switch_func):
     )
     password_inpt.grid(column=0, row=3, columnspan=2, padx=2, pady=5)
 
+    btn_frame = CTkFrame(
+        master=decrypt_frame,
+        width=720,
+        height=40,
+        bg_color=MEDICRYPT_COLORS["default_bg"],
+        fg_color=MEDICRYPT_COLORS["default_bg"],
+    )
+    btn_frame.grid(column=0, row=4, pady=5, sticky="nw")
+
+    algo1_btn = CTkButton(
+        master=btn_frame,
+        text="FY-Logistic",
+        text_color=MEDICRYPT_COLORS["default_bg"],
+        width=100,
+        height=40,
+        corner_radius=10,
+        bg_color=MEDICRYPT_COLORS["default_bg"],
+        fg_color=MEDICRYPT_COLORS["default_btn"],
+    )
+    algo1_btn.grid(column=0, row=0, padx=5, sticky='w')
+
+    algo2_btn = CTkButton(
+        master=btn_frame,
+        text="ILM-Cosine",
+        text_color=MEDICRYPT_COLORS["default_bg"],
+        width=100,
+        height=40,
+        corner_radius=10,
+        bg_color=MEDICRYPT_COLORS["default_bg"],
+        fg_color=MEDICRYPT_COLORS["default_btn"],
+    )
+    algo2_btn.grid(column=1, row=0, padx=5, sticky='w')
+
     decrypt_btn = CTkButton(
         master=decrypt_frame,
         text_color=MEDICRYPT_COLORS["default_bg"],
@@ -120,7 +153,7 @@ def decryptDisplay(master_frame, switch_func):
         fg_color=MEDICRYPT_COLORS["default_btn"],
         command=lambda: switch_func(master_frame, "menu")
     )
-    decrypt_btn.grid(column=0, row=4, pady=20, sticky='w')
+    decrypt_btn.grid(column=0, row=5, padx=4, pady=20, sticky='w')
 
     # Center the encrypt frame within the master_frame
     decrypt_frame.pack_propagate(False)  # Prevent frame from resizing to fit its children
