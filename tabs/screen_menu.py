@@ -19,7 +19,7 @@ def menuDisplay(master_frame, switch_func):
     )
 
     menu_frame = CTkFrame(
-        master=  master_frame,
+        master= master_frame,
         width=720, 
         height=480, 
         corner_radius=0,

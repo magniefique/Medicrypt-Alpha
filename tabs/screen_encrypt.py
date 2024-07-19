@@ -1,6 +1,9 @@
 from customtkinter import *
 from assets.colors import *
 
+getFilename = None
+
+
 def encryptDisplay(master_frame, switch_func):
     # Clear current contents of the master_frame
     for widget in master_frame.winfo_children():
@@ -8,9 +11,9 @@ def encryptDisplay(master_frame, switch_func):
 
     # Create the encrypt frame
     encrypt_frame = CTkFrame(
-        master=  master_frame,
-        width=720, 
-        height=480, 
+        master=master_frame,
+        width=720,
+        height=480,
         corner_radius=0,
         fg_color=MEDICRYPT_COLORS["default_bg"],
     )
@@ -32,7 +35,7 @@ def encryptDisplay(master_frame, switch_func):
         master=encrypt_frame,
         text_color=MEDICRYPT_COLORS["default_btn"],
         placeholder_text="Enter a file path or choose a file",
-        font= None,
+        font=None,
         width=550,
         height=50,
         corner_radius=0,
@@ -48,7 +51,7 @@ def encryptDisplay(master_frame, switch_func):
         master=encrypt_frame,
         text="File",
         text_color=MEDICRYPT_COLORS["default_btn"],
-        font= None,
+        font=None,
         width=50,
         height=50,
         corner_radius=0,
@@ -65,7 +68,7 @@ def encryptDisplay(master_frame, switch_func):
         master=encrypt_frame,
         text_color=MEDICRYPT_COLORS["default_btn"],
         placeholder_text="Enter a password",
-        font= None,
+        font=None,
         width=605,
         height=50,
         corner_radius=0,
@@ -85,7 +88,7 @@ def encryptDisplay(master_frame, switch_func):
         corner_radius=10,
         bg_color=MEDICRYPT_COLORS["default_bg"],
         fg_color=MEDICRYPT_COLORS["default_btn"],
-        command=lambda: switch_func(master_frame, "menu")
+        command=lambda: switch_func(master_frame, "progress", getFilename)
     )
     encrypt_btn.grid(column=0, row=3, pady=20, sticky='w')
 
@@ -93,7 +96,10 @@ def encryptDisplay(master_frame, switch_func):
     encrypt_frame.pack_propagate(False)  # Prevent frame from resizing to fit its children
     encrypt_frame.place(relx=0.5, rely=0.5, anchor='center')
 
+
 def browseFile(file_inpt):
+    global getFilename
     filename = filedialog.askopenfilename(filetypes=((".mp4 files", ".mp4"), ("All files", "*")))
+    getFilename = filename
     file_inpt.delete(0, END)
     file_inpt.insert(0, filename)
