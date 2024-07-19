@@ -3,7 +3,7 @@ import numpy as np
 import hashlib
 import time
 import cv2
-
+import threading
 
 def time_encrypt(func):
     def wrapper(*args, **kwargs):
@@ -163,4 +163,6 @@ class Encrypt:
 if __name__ == '__main__':
     v = Encrypt()
 
-    v.readVideo('test_vid/test2.mp4')
+    t1 = threading.Thread(target=v.readVideo, args=('test2.mp4',))
+
+    t1.start()
