@@ -155,10 +155,7 @@ class Encrypt:
 
             count += 1
 
-            
-
         cap.release()
-
 
 if __name__ == '__main__':
     v = Encrypt()

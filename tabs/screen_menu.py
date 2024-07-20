@@ -7,13 +7,13 @@ def menuDisplay(master_frame, switch_func):
         widget.destroy()
 
     menu_font = CTkFont(
-        family="Times",
-        size=48,
+        family="Baldessare",
+        size=72,
         weight="bold"
     )
 
     btn_font = CTkFont(
-        family="Poppins", 
+        family="Century Gothic", 
         size=16,
         weight="bold",
     )
@@ -43,7 +43,7 @@ def menuDisplay(master_frame, switch_func):
         text="ENCRYPT",
         font=btn_font,
         width=200,
-        height=40,
+        height=50,
         corner_radius=10,
         bg_color=MEDICRYPT_COLORS["default_bg"],
         fg_color=MEDICRYPT_COLORS["default_btn"],
@@ -55,7 +55,7 @@ def menuDisplay(master_frame, switch_func):
         text="DECRYPT",
         font=btn_font,
         width=200,
-        height=40,
+        height=50,
         corner_radius=10,
         bg_color=MEDICRYPT_COLORS["default_bg"],
         fg_color=MEDICRYPT_COLORS["default_btn"],
