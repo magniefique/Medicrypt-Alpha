@@ -152,10 +152,3 @@ def animate_dots(label, base_text="ENCRYPTING"):
         label.after(500, update_text)  # Schedule the function to run after 500 ms
 
     update_text()
-
-def runEncryption(file, label):
-    e = fisher_yates_encrypt.Encrypt()
-    t1 = threading.Thread(target=e.readVideo(file), args=(file, ))
-    t1.start()
-    t1.join()
-    print("Hello")
