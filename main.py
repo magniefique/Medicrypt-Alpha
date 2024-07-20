@@ -22,7 +22,7 @@ def switchTab(root_frame, tab_name, file=None):
         screen_decrypt.decryptDisplayNew(root_frame, switchTab)
 
     elif tab_name == "progress":
-        screen_progress.progressDisplay(root_frame, switchTab, file)
+        screen_progress.progressDisplayNew(root_frame, switchTab, file)
 
 # Main function for the Application
 def mainFunc():

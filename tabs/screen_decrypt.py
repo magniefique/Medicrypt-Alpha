@@ -162,15 +162,17 @@ def decryptDisplay(master_frame, switch_func):
 
 def decryptDisplayNew(master_frame, switch_func):
     
-    decrypt_fnt = CTkFont(
-        family="Century Gothic",
-        size=18,
-        weight="bold"
-    )
+    # All fonts
 
     title_fnt = CTkFont(
         family="Baldessare",
-        size=20
+        size=26
+    )
+
+    main_label_fnt = CTkFont(
+        family="Century Gothic",
+        size=18,
+        weight="bold"
     )
 
     gen_fnt = CTkFont(
@@ -179,6 +181,12 @@ def decryptDisplayNew(master_frame, switch_func):
 
     label_fnt = CTkFont(
         family="Century Gothic",
+        weight="bold"
+    )
+
+    decrypt_fnt = CTkFont(
+        family="Century Gothic",
+        size=18,
         weight="bold"
     )
 
@@ -235,7 +243,7 @@ def decryptDisplayNew(master_frame, switch_func):
         master=nav,
         text="Encrypt a Video",
         text_color=MEDICRYPT_COLORS["default_btn"],
-        font=label_fnt,
+        font=main_label_fnt,
     )
     main_label.grid(column=1, row=1, pady=0, sticky='w')
 
