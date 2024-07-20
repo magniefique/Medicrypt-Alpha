@@ -243,7 +243,7 @@ def decryptDisplayNew(master_frame, switch_func):
 
     main_label = CTkLabel(
         master=nav,
-        text="Encrypt a Video",
+        text="Decrypt a Video",
         text_color=MEDICRYPT_COLORS["default_btn"],
         font=main_label_fnt,
     )
