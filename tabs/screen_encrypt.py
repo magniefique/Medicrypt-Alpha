@@ -138,6 +138,11 @@ def encryptDisplayNew(master_frame, switch_func):
         weight="bold"
     )
 
+    title_fnt = CTkFont(
+        family="Baldessare",
+        size=20
+    )
+
     gen_fnt = CTkFont(
         family="Century Gothic",
     )
@@ -168,7 +173,7 @@ def encryptDisplayNew(master_frame, switch_func):
         bg_color=MEDICRYPT_COLORS["default_bg"]
     )
     nav.grid_propagate(False)
-    nav.grid(column=0, row=0, pady=2, sticky="w")
+    nav.grid(column=0, row=0, pady=2, sticky="ew")
 
     # Configure grid rows for nav to center the button vertically
     nav.grid_rowconfigure(0, weight=1)
@@ -195,6 +200,27 @@ def encryptDisplayNew(master_frame, switch_func):
         command=lambda: switch_func(master_frame, "menu")
     )
     back_btn.grid(column=0, row=1, pady=0, sticky='w')
+
+    main_label = CTkLabel(
+        master=nav,
+        text="Encrypt a Video",
+        text_color=MEDICRYPT_COLORS["default_btn"],
+        font=label_fnt,
+    )
+    main_label.grid(column=1, row=1, pady=0, sticky='w')
+
+    title_card = CTkLabel(
+        master=nav,
+        text="MEDICRYPT",
+        text_color=MEDICRYPT_COLORS["default_btn"],
+        font=title_fnt,
+    )
+    title_card.grid(column=2, row=1, padx=[0, 10], pady=0, sticky='e')
+
+    # Configure the columns of the nav frame to allow expansion
+    nav.grid_columnconfigure(0, weight=0)  # back_btn
+    nav.grid_columnconfigure(1, weight=0)  # main_label
+    nav.grid_columnconfigure(2, weight=1)  # this will push title_card to the right
 
     main = CTkFrame(
         master=encrypt_frame,

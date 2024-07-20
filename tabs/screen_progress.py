@@ -2,7 +2,6 @@ from customtkinter import *
 from assets.colors import *
 import fisher_yates_encrypt
 
-
 def progressDisplay(master_frame, switch_func, file):
     # Clear current contents of the master_frame
     for widget in master_frame.winfo_children():
@@ -52,7 +51,6 @@ def progressDisplay(master_frame, switch_func, file):
     progress_frame.place(relx=0.5, rely=0.5, anchor='center')
 
     runEncryption(file)
-
 
 def runEncryption(file):
     e = fisher_yates_encrypt.Encrypt()

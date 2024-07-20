@@ -9,7 +9,6 @@ def menuDisplay(master_frame, switch_func):
     menu_font = CTkFont(
         family="Baldessare",
         size=72,
-        weight="bold"
     )
 
     btn_font = CTkFont(
