@@ -177,7 +177,7 @@ def doneDisplay(master_frame, switch_func, file, process):
 
 def openFolder():
     # Specify the folder path you want to open
-    folder_path = r'C:\Users\xcharuzu\Documents\GitHub\Medicrypt-Alpha\outputs'
+    folder_path = os.getcwd() + "\outputs"
 
     # Open the folder in File Explorer
     subprocess.run(['explorer', folder_path])
