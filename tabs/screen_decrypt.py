@@ -2,6 +2,8 @@ from customtkinter import *
 from assets.colors import *
 from PIL import Image
 
+getFilename = None
+
 def decryptDisplay(master_frame, switch_func):
     # Clear current contents of the master_frame
     for widget in master_frame.winfo_children():
@@ -361,7 +363,7 @@ def decryptDisplayNew(master_frame, switch_func):
         border_width=2,
         border_color=MEDICRYPT_COLORS["default_btn"],
         hover_color=MEDICRYPT_COLORS["default_bg"],
-        command=lambda: browseHashFile(file_inpt)
+        command=lambda: browseHashFile(hash_inpt)
     )
     hash_upload_btn.grid(column=1, row=3, padx=2, pady=5)
 
@@ -449,7 +451,7 @@ def decryptDisplayNew(master_frame, switch_func):
         corner_radius=10,
         bg_color=MEDICRYPT_COLORS["default_bg"],
         fg_color=MEDICRYPT_COLORS["default_btn"],
-        command=lambda: switch_func(master_frame, "menu")
+        command=lambda: switch_func(master_frame, "progress2", getFilename, "DECRYPTING")
     )
     decrypt_btn.grid(column=0, row=8, padx=4, pady=20, sticky='ew', columnspan=2)
 
@@ -458,7 +460,9 @@ def decryptDisplayNew(master_frame, switch_func):
     decrypt_frame.place(relx=0.5, rely=0.5, anchor='center')
 
 def browseFile(file_inpt):
-    filename = filedialog.askopenfilename(filetypes=((".mp4 files", ".mp4"), ("All files", "*")))
+    global getFilename
+    filename = filedialog.askopenfilename(filetypes=((".avi files", ".avi"), ("All files", "*")))
+    getFilename = filename
     file_inpt.delete(0, END)
     file_inpt.insert(0, filename)
 

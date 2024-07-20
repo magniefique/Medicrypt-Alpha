@@ -1,9 +1,14 @@
 from customtkinter import *
 from assets.colors import *
 import fisher_yates_encrypt
+import fisher_yates_encrypt
 import threading
+import cv2
+from PIL import Image, ImageTk
+import time
+import shutil
 
-def progressDisplay(master_frame, switch_func, file):
+def progressDisplay(master_frame, switch_func, file, progress):
     # Clear current contents of the master_frame
     for widget in master_frame.winfo_children():
         widget.destroy()
@@ -51,10 +56,57 @@ def progressDisplay(master_frame, switch_func, file):
     progress_frame.pack_propagate(False)  # Prevent frame from resizing to fit its children
     progress_frame.place(relx=0.5, rely=0.5, anchor='center')
 
-    runEncryption(file)
+    # runEncryption(file)
 
-def progressDisplayNew(master_frame, switch_func, file):
-    
+def progressDisplayDecrypt(master_frame, switch_func, file, progress):
+    runProgressThread2(master_frame, switch_func, file, progress)
+
+def progressRun1(master_frame, switch_func, file, progress):
+    runProgressThread1(master_frame, switch_func, file, progress)
+
+def progressRun2(master_frame, switch_func, file, progress):
+    runProgressThread2(master_frame, switch_func, file, progress)
+
+# Run thread for Encryption     
+def runProgressThread1(root_frame, func, file, progress):
+    t1 = threading.Thread(target=runEncryption, args=(file, ))
+    t1.start()
+    progressDisplayEncrypt(root_frame, func, file, progress)
+    checkComplete(t1, root_frame, func, file, progress)
+
+# Run thread for Encryption     
+def runProgressThread2(root_frame, func, file, progress):
+    t1 = threading.Thread(target=runDecryption, args=(file, ))
+    t1.start()
+    progressDisplayEncrypt(root_frame, func, file, progress)
+    checkComplete(t1, root_frame, func, file, progress)
+
+def runDecryption(file):
+    time.sleep(5)
+    # you have to open the source  file in binary mode with 'rb'
+    shutil.copy("test2.avi", "outputs/test_decrypt.avi")
+
+# Run Encryption
+def runEncryption(file):
+    e = fisher_yates_encrypt.Encrypt()
+    e.readVideo(file)
+
+def checkComplete(thread, root_frame, func, file, progress):
+    if thread.is_alive():
+        root_frame.after(100, checkComplete, thread, root_frame, func, file, progress)
+        
+    else:
+        if progress == "ENCRYPTING":
+            func(root_frame, "complete1", file)
+
+        else:
+            func(root_frame, "complete2", file)
+
+def progressDisplayEncrypt(master_frame, switch_func, file, progress):
+    cap = cv2.VideoCapture(file)
+    ret, frame = cap.read()
+    rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
     title_fnt = CTkFont(
         family="Baldessare",
         size=26
@@ -122,23 +174,31 @@ def progressDisplayNew(master_frame, switch_func, file):
 
     progress_label = CTkLabel(
         master=main,
-        text="ENCRYPTING",
+        text=progress,
         text_color=MEDICRYPT_COLORS["default_btn"],
         font=label_fnt
     )
     progress_label.grid(column=0, row=1, pady=5)
 
-    progress_img_frame = CTkFrame(
+    progress_img = CTkImage(
+        light_image=Image.fromarray(rgb_image),
+        dark_image=Image.fromarray(rgb_image),
+        size=(300, 300),
+    )
+
+    progress_img_frame = CTkLabel(
         master=main,
         width=250,
         height=250,
+        text="",
+        image=progress_img,
     )
     progress_img_frame.grid(column=0, row=2, pady=5)
 
     progress_frame.pack_propagate(False)  # Prevent frame from resizing to fit its children
     progress_frame.place(relx=0.5, rely=0.5, anchor='center')    
 
-    animate_dots(progress_label)
+    animate_dots(progress_label, progress)
 
 # Animation function
 def animate_dots(label, base_text="ENCRYPTING"):

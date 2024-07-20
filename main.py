@@ -3,13 +3,11 @@ import tabs.screen_menu as screen_menu
 import tabs.screen_encrypt as screen_encrypt
 import tabs.screen_decrypt as screen_decrypt
 import tabs.screen_progress as screen_progress
+import tabs.screen_done as screen_done
 from assets.colors import *
-import fisher_yates_encrypt
-import threading
-import time
 
 # Function to switch tabs
-def switchTab(root_frame, tab_name, file=None):
+def switchTab(root_frame, tab_name, file=None, progress=None):
     # Clear current contents of the frame
     for widget in root_frame.winfo_children():
         widget.destroy()
@@ -24,19 +22,17 @@ def switchTab(root_frame, tab_name, file=None):
     elif tab_name == "decrypt":
         screen_decrypt.decryptDisplayNew(root_frame, switchTab)
 
-    elif tab_name == "progress":
-        runProgressThread(root_frame, switchTab, file)
+    elif tab_name == "progress1":
+        screen_progress.progressRun1(root_frame, switchTab, file, progress)
 
-# Run thread for Encryption     
-def runProgressThread(root_frame, func, file):
-    t1 = threading.Thread(target=runEncryption, args=(file, ))
-    t1.start()
-    screen_progress.progressDisplayNew(root_frame, switchTab, file)
+    elif tab_name == "progress2":
+        screen_progress.progressRun2(root_frame, switchTab, file, progress)
 
-# Run Encryption
-def runEncryption(file):
-    e = fisher_yates_encrypt.Encrypt()
-    e.readVideo(file)
+    elif tab_name == "complete1":
+        screen_done.doneDisplay(root_frame, switchTab, file, "ENCRYPTION")
+    
+    elif tab_name == "complete2":
+        screen_done.doneDisplay(root_frame, switchTab, file, "DECRYPTION")
 
 # Main function for the Application
 def mainFunc():

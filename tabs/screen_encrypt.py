@@ -371,7 +371,7 @@ def encryptDisplayNew(master_frame, switch_func):
         corner_radius=10,
         bg_color=MEDICRYPT_COLORS["default_bg"],
         fg_color=MEDICRYPT_COLORS["default_btn"],
-        command=lambda: switch_func(master_frame, "progress", getFilename)
+        command=lambda: switch_func(master_frame, "progress1", getFilename, "ENCRYPTING")
     )
     encrypt_btn.grid(column=0, row=6, padx=4, pady=20, sticky='ew', columnspan=2)
 
@@ -381,7 +381,7 @@ def encryptDisplayNew(master_frame, switch_func):
 
 def browseFile(file_inpt):
     global getFilename
-    filename = filedialog.askopenfilename(filetypes=((".mp4 files", ".mp4"), ("All files", "*")))
+    filename = filedialog.askopenfilename(filetypes=((".avi files", ".avi"), ("All files", "*")))
     getFilename = filename
     file_inpt.delete(0, END)
     file_inpt.insert(0, filename)

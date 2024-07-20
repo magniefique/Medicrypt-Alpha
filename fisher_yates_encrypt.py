@@ -107,7 +107,7 @@ class Encrypt:
     @time_encrypt
     def readVideo(self, filepath):
         cap = cv2.VideoCapture(filepath)
-        result = cv2.VideoWriter('test_encrypt.avi', cv2.VideoWriter_fourcc(*'HFYU'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(3)), int(cap.get(4))))
+        result = cv2.VideoWriter('outputs/test_encrypt.avi', cv2.VideoWriter_fourcc(*'HFYU'), cap.get(cv2.CAP_PROP_FPS), (int(cap.get(3)), int(cap.get(4))))
 
         # grabbed, frame = cap.read()
 
