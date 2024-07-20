@@ -1,6 +1,7 @@
 from customtkinter import *
 from assets.colors import *
 import fisher_yates_encrypt
+import threading
 
 def progressDisplay(master_frame, switch_func, file):
     # Clear current contents of the master_frame
@@ -154,4 +155,6 @@ def animate_dots(label, base_text="ENCRYPTING"):
 
 def runEncryption(file):
     e = fisher_yates_encrypt.Encrypt()
-    e.readVideo(file)
+    t1 = threading.Thread(target=e.readVideo(file), args=(file,))
+    t1.start()
+
