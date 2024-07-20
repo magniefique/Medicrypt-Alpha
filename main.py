@@ -4,6 +4,8 @@ import tabs.screen_encrypt as screen_encrypt
 import tabs.screen_decrypt as screen_decrypt
 import tabs.screen_progress as screen_progress
 from assets.colors import *
+import fisher_yates_encrypt
+import threading
 
 # Function to switch tabs
 def switchTab(root_frame, tab_name, file=None):
@@ -22,7 +24,17 @@ def switchTab(root_frame, tab_name, file=None):
         screen_decrypt.decryptDisplayNew(root_frame, switchTab)
 
     elif tab_name == "progress":
-        screen_progress.progressDisplayNew(root_frame, switchTab, file)
+        runEncryption(root_frame, switchTab, file)
+        
+
+def runEncryption(root_frame, func, file):
+    e = fisher_yates_encrypt.Encrypt()
+    t1 = threading.Thread(target=e.readVideo(file), args=(file, ))
+    t1.start()
+    screen_progress.progressDisplayNew(root_frame, switchTab, file)
+
+def funcshit():
+    pass
 
 # Main function for the Application
 def mainFunc():

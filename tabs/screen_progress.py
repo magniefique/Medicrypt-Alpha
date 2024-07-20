@@ -139,8 +139,6 @@ def progressDisplayNew(master_frame, switch_func, file):
     progress_frame.place(relx=0.5, rely=0.5, anchor='center')    
 
     animate_dots(progress_label)
-    
-    runEncryption(file)
 
 # Animation function
 def animate_dots(label, base_text="ENCRYPTING"):
@@ -155,9 +153,9 @@ def animate_dots(label, base_text="ENCRYPTING"):
 
     update_text()
 
-def runEncryption(file):
+def runEncryption(file, label):
     e = fisher_yates_encrypt.Encrypt()
-    t1 = threading.Thread(target=e.readVideo(file), args=(file,))
+    t1 = threading.Thread(target=e.readVideo(file), args=(file, ))
     t1.start()
-    if t1.is_alive():
-        pass
+    t1.join()
+    print("Hello")
