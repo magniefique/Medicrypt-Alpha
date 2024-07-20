@@ -11,7 +11,7 @@ def time_encrypt(func):
         result = func(*args, **kwargs)
         t2 = time.time() - t1
         # print(f'time: {t2}')
-        print(f'time: {t2}')
+        #print(f'time: {t2}')
         # return t2
         return result
 

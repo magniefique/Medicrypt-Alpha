@@ -90,6 +90,7 @@ def runDecryption(file):
 def runEncryption(file):
     e = fisher_yates_encrypt.Encrypt()
     e.readVideo(file)
+    shutil.copy("hash.txt", "outputs/hash_1.txt")
 
 def checkComplete(thread, root_frame, func, file, progress):
     if thread.is_alive():

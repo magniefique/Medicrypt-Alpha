@@ -185,13 +185,13 @@ def openFolder():
 def printInfo():
     if app_process == "ENCRYPTION":
         print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSecurity Information")
-        print("Entropy:\t7.9992")
-        print("CC-d:\t+0.000177")
-        print("CC-v:\t+0.004846")
-        print("CC-h:\t−0.001483")
-        print("UACI:\t37.66040")
-        print("NPCR:\t99.60256")
+        print("Entropy\t\t: 7.9992")
+        print("CC-d\t\t: +0.000177")
+        print("CC-v\t\t: +0.004846")
+        print("CC-h\t\t: −0.001483")
+        print("UACI:\t\t: 37.66040")
+        print("NPCR:\t\t: 99.60256")
 
     else:
         print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSecurity Information")
-        print("PSNR:\t80.3242")
+        print("PSNR\t\t: 80.3242")
